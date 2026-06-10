@@ -309,4 +309,4 @@ cat /var/log/xray/error.log
 
 VPN 测速方法
 https://fast.com
-如果速度低还可以做一些优化，优化方法可以参考我的另一篇文章
+如果速度低还可以做一些优化，优化方法可以参考我的另一篇文章[VPN速度优化](https://github.com/xgbbing/VPS-config/blob/main/VPN%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96.md)
