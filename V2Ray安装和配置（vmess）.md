@@ -73,9 +73,9 @@ systemctl start v2ray
 
 V2Ray项目不区分客户端和服务端，然而实际使用中客户端经常需要用户界面，因此许多开发者基于V2Ray内核开发了友好易用的客户端。
 
-macOS：https://github.com/Cenmrev/V2RayX/releases
-Android：https://github.com/2dust/v2rayNG/releases
-Windows、Linux https://github.com/2dust/v2rayN/releases
+- macOS：https://github.com/Cenmrev/V2RayX/releases
+- Android：https://github.com/2dust/v2rayNG/releases
+- Windows、Linux https://github.com/2dust/v2rayN/releases
 
 下载客户端，在配置窗口点击“增加”，然后在“服务器信息”中填入服务器的ip、端口、用户id：
 
