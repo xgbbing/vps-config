@@ -181,12 +181,12 @@ systemctl status xray
 
 XRay项目不区分客户端和服务端，然而实际使用中客户端经常需要用户界面，因此许多开发者基于XRay内核开发了友好易用的客户端。
 
-- macOS：https://github.com/yanue/V2rayU/releases
+- IOS：https://github.com/yanue/V2rayU/releases
 - Android：https://github.com/2dust/v2rayNG/releases
   新版本才支持 `xray-core`，切换后如果不生效可以重启一下app或者手机
 - Android：https://github.com/hiddify/hiddify-app/releases
   界面友好
-- Windows、Linux https://github.com/2dust/v2rayN/releases
+- Windows、Linux、macOS：https://github.com/2dust/v2rayN/releases
 
 下载客户端，在配置窗口点击“增加”，然后在“服务器信息”中填入以下信息：
 
