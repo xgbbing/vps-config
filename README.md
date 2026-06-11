@@ -1,6 +1,6 @@
 # vps-config
 
-记录如何在VPS服务器上部署VPN实现网络代理以及VPN速度优化
+如何在VPS服务器上部署VPN、VPN速度优化方案
 
 - [XRay + vless + reality 方案](https://github.com/xgbbing/vps-config/blob/main/XRay%2Bvless%2Breality.md)（推荐）
 
