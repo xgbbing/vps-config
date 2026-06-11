@@ -4,7 +4,7 @@
 
 - [XRay + vless + reality 方案](https://github.com/xgbbing/vps-config/blob/main/XRay%2Bvless%2Breality.md)（推荐）
 
-- [V2Ray + vmess 方案](https://github.com/xgbbing/vps-config/blob/main/XRay%2Bvless%2Btls.md)（旧方案）
+- [V2Ray + vmess 方案](https://github.com/xgbbing/vps-config/blob/main/V2Ray%2Bvmess.md)（旧方案）
 
 - [VPN速度优化方案](https://github.com/xgbbing/vps-config/blob/main/VPN%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96.md)
 
