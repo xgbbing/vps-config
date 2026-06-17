@@ -32,3 +32,7 @@ cat /proc/version 显示内核版本
 apt update 更新软件包列表
 apt upgrade -y 升级软件包
 apt install -y <软件包名> 安装软件包
+
+- 查找命令
+
+ps aux | grep xray 搜索xray进程（含目录）
