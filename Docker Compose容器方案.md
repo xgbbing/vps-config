@@ -154,35 +154,79 @@ vi /opt/docker-app/docker-compose.yml
 
 [docker-compose.yml 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/docker-compose.yml)
 
-## 修改日志轮转服务 todo
+## 修改 nginx 日志轮转服务
 ```
 vi /etc/logrotate.d/nginx
 ```
 
 ```
-# 修改为 docker 方式重载
-postrotate
-    docker exec nginx nginx -s reopen
+# 修改为 docker compose方式重载
+prerotate
+		docker compose -f /opt/docker-app/docker-compose.yml exec -T nginx nginx -s reopen
+	endscript
+	postrotate
+		docker compose -f /opt/docker-app/docker-compose.yml kill -s HUP nginx
+	endscript
 ```
 
-## 修改 Fail2ban 配置 todo
+```
+# 手动测试 logrotate
+logrotate -f /etc/logrotate.d/nginx
+```
+
+## 修改 Fail2ban 配置
 
 ```
+# 修改 fail2ban 配置
 vi /etc/fail2ban/jail.local
 ```
+[fail2ban/jail.local 示例]()
 
 ```
-# 新增：监控 nginx 容器日志
-[nginx-http-auth]
-enabled = true
-prot = http,https
-logpath = /var/log/nginx/error.log
-maxretry = 5
+# 添加邮件通知 action
+vi /etc/fail2ban/action.d/send-mail.conf
+```
+[fail2ban/action.d/send-mail.conf 示例]()
+
+```
+# 编写邮件通知脚本
+vi /opt/f2b-send-mail.sh
+```
+[/opt/f2b-send-mail.sh 示例]()
+
+```
+# 查看 fail2ban sshd 状态
+fail2ban-client status sshd
+
+# 查看 fail2ban nginx-http-auth 状态
+fail2ban-client status nginx-http-auth
+
+# 测试发送邮件脚本
+/opt/f2b-send-mail.sh
+
 ```
 
 ```
 # 重启 fail2ban 服务
 systemctl restart fail2ban
+```
+
+## 发送邮件配置
+
+````
+# 安装 msmtp 发邮件服务
+apt install msmtp -y
+
+vi ~/.msmtprc
+
+# 设置权限
+chmod 600 ~/.msmtprc
+````
+[.msmtprc 示例]()
+
+```
+# 查看邮件发送日志
+tail -10 ~/.msmtp.log
 ```
 
 ## Cron 添加容器状态监控 todo

@@ -1,0 +1,22 @@
+[sshd]
+enabled = true
+
+journalmatch = _SYSTEMD_UNIT=ssh.service
+                + SYSLOG_IDENTIFIER=sshd
+                + SYSLOG_IDENTIFIER=ssh
+
+findtime = 10m
+maxretry = 10
+bantime = 1h
+
+action = iptables-multiport[name=sshd, port="ssh", protocol=tcp]
+         send-mail
+
+[nginx-http-auth]
+enabled = true
+port = http,https
+logpath = /var/log/nginx/error.log
+maxretry = 5
+
+action = iptables-multiport[name=nginx-http-auth, port="http,https", protocol=tcp]
+         send-mail
