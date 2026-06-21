@@ -1,4 +1,4 @@
-# Docker 容器迁移方案
+# Docker compose 容器迁移方案
 
 ## 迁移前备份
 ## nginx 配置
