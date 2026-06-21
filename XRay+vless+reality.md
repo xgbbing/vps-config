@@ -52,7 +52,7 @@ openssl rand -hex 8
 
 ## 配置文件
 
-Xray安装完成后，配置文件为 `/usr/local/etc/Xray/config.json`，内容默认为空。（具体路径以实际为准）
+Xray安装完成后，配置文件为 `/usr/local/etc/xray/config.json`，内容默认为空。（具体路径以实际为准）
 粘贴下面模板内容至配置文件中：
 
 ```
@@ -64,6 +64,7 @@ Xray安装完成后，配置文件为 `/usr/local/etc/Xray/config.json`，内容
   },
   "inbounds": [
     {
+      "listen": "::",
       "port": 8443,
       "protocol": "vless",
       "settings": {
