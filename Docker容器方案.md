@@ -1,16 +1,20 @@
 # Docker 容器迁移方案
 
 ## 迁移前备份
-
 ## nginx 配置
+```
 vi /etc/nginx/nginx.conf
 vi /etc/nginx/conf.d/default.conf
 vi /etc/nginx/sites-enabled/default
+```
  
 ## 端口占用
+```
 ss -tlnp
+```
 
 ## 前端文件
+
 /var/www/html
 
 ## node 信息
@@ -26,13 +30,19 @@ node 环境变量 PORT=3000 NODE_ENV=production
 xray 配置文件 /usr/local/etc/xray/config.json
 
 ## cron 配置
+```
 vi /opt/monitor.sh
+```
 
 ## 日志论证 logrotate 配置
+```
 vi /etc/logrotate.d/nginx
+```
 
 ## fail2ban 配置
+```
 vi /etc/fail2ban/jail.local
+```
 
 ## msmtp 配置
 
@@ -94,7 +104,9 @@ cd /opt/docker-app
 ```
 
 ## node 迁移
+```
 cp -r /opt/node-server/dist /opt/node-server/package*.json /opt/docker-app/node/
+```
 
 ## 编写 node/Dockerfile
 
@@ -254,6 +266,7 @@ pm2 start all
 
 ## 进入容器后如何退出容器
 进入容器后，要退回到宿主机，执行以下任一操作即可：
-输入 exit 然后按回车（最标准的方式）
-按快捷键 Ctrl + D（快速退出）
-按 Ctrl + C（如果进程卡住，强制中断退出）
+
+- 输入 exit 然后按回车（最标准的方式）
+- 按快捷键 Ctrl + D（快速退出）
+- 按 Ctrl + C（如果进程卡住，强制中断退出）
