@@ -131,3 +131,32 @@ Host myserver
 服务器备份	建议备份 /etc/ssh/sshd_config 文件，方便回滚
 保留应急通道	配置完成后，建议保留一个 VNC/控制台登录方式，以防万一
 
+
+## 缓存密钥指纹（仅当前会话缓存）
+```
+# 启动 ssh-agent
+eval $(ssh-agent)
+
+# 添加密钥指纹
+ssh-add ~/.ssh/id_rsa
+
+# 设置过期时间（可选，默认永久）
+# 例如，设置超时时间为 1 小时（3600 秒）
+ssh-add -t 3600 ~/.ssh/id_rsa
+
+# 查看所有密钥指纹
+ssh-add -l
+
+# 删除所有密钥指纹
+ssh-add -D
+```
+
+## 终端会话共享 ssh-agent
+```
+# 安装 keychain
+brew install keychain
+
+# ~/.bash_profile 或 ~/.zshrc 中添加以下内容
+# 启动 keychain，并指定要加载的私钥文件（例如 id_rsa 和 id_ed25519）
+eval $(keychain --eval --agents ssh id_rsa id_ed25519)
+```
