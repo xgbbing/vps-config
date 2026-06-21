@@ -243,6 +243,7 @@ pm2 start all
 
 ## docker 容器常用命令
 ｜ 命令	｜ 说明	 ｜ 适用你的场景 ｜ 
+｜ ----｜ ----｜ ----｜
 ｜ `docker compose build <服务名>` ｜ 构建镜像（会拉取镜像）。 ｜ 创建镜像时，会拉取镜像。 ｜
 ｜ `docker compose up -d`	｜ 后台启动所有服务。如果镜像不存在会先拉取。｜修改 docker-compose.yml 后，必须用此命令重建容器以应用新配置。 ｜ 
 ｜ `docker compose stop`	｜ 停止所有容器（不会删除容器）。 ｜ 临时暂停服务。 ｜ 
