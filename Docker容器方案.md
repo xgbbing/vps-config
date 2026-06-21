@@ -242,28 +242,28 @@ pm2 start all
 ```
 
 ## docker 容器常用命令
-｜ 命令	｜ 说明	 ｜ 适用你的场景 ｜ 
-｜ ----｜ ----｜ ----｜
-｜ `docker compose build <服务名>` ｜ 构建镜像（会拉取镜像）。 ｜ 创建镜像时，会拉取镜像。 ｜
-｜ `docker compose up -d`	｜ 后台启动所有服务。如果镜像不存在会先拉取。｜修改 docker-compose.yml 后，必须用此命令重建容器以应用新配置。 ｜ 
-｜ `docker compose stop`	｜ 停止所有容器（不会删除容器）。 ｜ 临时暂停服务。 ｜ 
-｜ `docker compose start`	｜ 启动已被停止的容器。	｜ 恢复暂停的服务。 ｜ 
-｜ `docker compose restart` ｜ 重启所有容器（不会应用 yml 文件的改动）。 ｜ 仅当容器卡死、需要重新加载进程时使用（不解决配置问题）。 ｜ 
-｜ `docker compose down`	｜ 停止并删除所有容器、网络（默认不删除数据卷）。	｜ 彻底清理环境，准备全新重建时使用。 ｜ 
-|  `docker compose down --volumes` ｜ 删除所有容器、网络、卷（数据卷）。 ｜ 彻底清理环境，准备全新重建时使用。 ｜ 
-｜ `docker logs -f xray` ｜ 查看 xray 的实时日志 ｜ |
-｜ `docker logs xray` ｜ 查看 xray 的历史日志 ｜ |
-｜ `docker exec -it xray /bin/bash` ｜ 进入 xray 容器 ｜ |
-｜ `docker stats nginx --no-stream` ｜ 显示 nginx 容器的实时资源使用情况 ｜ |
-| `docker-compose ps` ｜ 显示所有容器的状态 ｜|
-| `docker inspect xray | grep IPAddress` ｜ 显示 xray 容器的 IP 地址 | |
+| 命令	| 说明	 | 适用你的场景 | 
+| ----| ----| ----|
+| `docker compose build <服务名>` | 构建镜像（会拉取镜像）。 | 创建镜像时，会拉取镜像。 |
+| `docker compose up -d`	| 后台启动所有服务。如果镜像不存在会先拉取。|修改 docker-compose.yml 后，必须用此命令重建容器以应用新配置。 | 
+| `docker compose stop`	| 停止所有容器（不会删除容器）。 | 临时暂停服务。 | 
+| `docker compose start`	| 启动已被停止的容器。	| 恢复暂停的服务。 | 
+| `docker compose restart` | 重启所有容器（不会应用 yml 文件的改动）。 | 仅当容器卡死、需要重新加载进程时使用（不解决配置问题）。 | 
+| `docker compose down`	| 停止并删除所有容器、网络（默认不删除数据卷）。	| 彻底清理环境，准备全新重建时使用。 | 
+|  `docker compose down --volumes` | 删除所有容器、网络、卷（数据卷）。 | 彻底清理环境，准备全新重建时使用。 | 
+| `docker logs -f xray` | 查看 xray 的实时日志 | |
+| `docker logs xray` | 查看 xray 的历史日志 | |
+| `docker exec -it xray /bin/bash` | 进入 xray 容器 | |
+| `docker stats nginx --no-stream` | 显示 nginx 容器的实时资源使用情况 | |
+| `docker-compose ps` | 显示所有容器的状态 ||
+| `docker inspect xray | grep IPAddress` | 显示 xray 容器的 IP 地址 | |
 | `netstat -tlnp | grep 443` | 应该只看到 Xray 在监听 443 | |
 | `docker exec -it xray ping nginx` |  检查容器间通信 应该能通 | |
-｜ `docker compose exec xray sh` | 进入 xray 容器 | 适合docker-compose 创建的容器 |
+| `docker compose exec xray sh` | 进入 xray 容器 | 适合docker-compose 创建的容器 |
 | `docker exec -it xray sh` | 进入 xray 容器 | 适合 docker 创建的容器 |
-｜ `docker compose exec nginx cat /etc/nginx/default.conf` | 不进入容器直接查看 nginx 配置 ｜ ｜
-｜ `docker compose exec nginx ps aux` | 查看 nginx 进程 ｜ ｜
-| `docker compose exec nginx nginx -t` | 检查 Nginx 配置文件 | ｜
+| `docker compose exec nginx cat /etc/nginx/default.conf` | 不进入容器直接查看 nginx 配置 | |
+| `docker compose exec nginx ps aux` | 查看 nginx 进程 | |
+| `docker compose exec nginx nginx -t` | 检查 Nginx 配置文件 | |
 
 ## 进入容器后如何退出容器
 进入容器后，要退回到宿主机，执行以下任一操作即可：
