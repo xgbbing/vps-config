@@ -256,14 +256,14 @@ pm2 start all
 | `docker exec -it xray /bin/bash` | 进入 xray 容器 | |
 | `docker stats nginx --no-stream` | 显示 nginx 容器的实时资源使用情况 | |
 | `docker-compose ps` | 显示所有容器的状态 ||
-| `docker inspect xray | grep IPAddress` | 显示 xray 容器的 IP 地址 | |
-| `netstat -tlnp | grep 443` | 应该只看到 Xray 在监听 443 | |
+| `docker inspect xray ｜ grep IPAddress` | 显示 xray 容器的 IP 地址 | |
+| `netstat -tlnp ｜ grep 443` | 应该只看到 Xray 在监听 443 | |
 | `docker exec -it xray ping nginx` |  检查容器间通信 应该能通 | |
 | `docker compose exec xray sh` | 进入 xray 容器 | 适合docker-compose 创建的容器 |
 | `docker exec -it xray sh` | 进入 xray 容器 | 适合 docker 创建的容器 |
 | `docker compose exec nginx cat /etc/nginx/default.conf` | 不进入容器直接查看 nginx 配置 | |
 | `docker compose exec nginx ps aux` | 查看 nginx 进程 | |
-| `docker compose exec nginx nginx -t` | 检查 Nginx 配置文件 | |
+| `docker compose exec nginx nginx -t` | 检查 Nginx 配置文件 |
 
 ## 进入容器后如何退出容器
 进入容器后，要退回到宿主机，执行以下任一操作即可：
