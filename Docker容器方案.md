@@ -75,8 +75,7 @@ cd /opt/docker-app
 /opt/docker-app/
 ├── docker-compose.yml
 ├── nginx/
-│   └── conf.d/
-│       └── default.conf # nginx 配置文件
+│   └── default.conf # nginx 配置文件
 |
 ├── html/
 │   ├── home # 主页前端资源
@@ -108,12 +107,16 @@ cp -r /opt/node-server/dist /opt/node-server/package*.json /opt/docker-app/node/
 ## nginx 迁移
 
 ```
-vi /opt/docker-app/nginx/conf.d/default.conf
+cp -r /etc/nginx/conf.d/default.conf /opt/docker-app/nginx/
 ```
 
-## 编写 nginx/conf.d/default.conf
+## 编写 nginx/default.conf
 
-[nginx/conf.d/default.conf 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/nginx/default.conf)
+```
+vi /opt/docker-app/nginx/default.conf
+```
+
+[nginx/default.conf 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/nginx/default.conf)
 
 ## 前端 迁移
 
@@ -245,7 +248,7 @@ pm2 start all
 | `docker exec -it xray ping nginx` |  检查容器间通信 应该能通 | |
 ｜ `docker compose exec xray sh` | 进入 xray 容器 | 适合docker-compose 创建的容器 |
 | `docker exec -it xray sh` | 进入 xray 容器 | 适合 docker 创建的容器 |
-｜ `docker compose exec nginx cat /etc/nginx/conf.d/default.conf` | 不进入容器直接查看 nginx 配置 ｜ ｜
+｜ `docker compose exec nginx cat /etc/nginx/default.conf` | 不进入容器直接查看 nginx 配置 ｜ ｜
 ｜ `docker compose exec nginx ps aux` | 查看 nginx 进程 ｜ ｜
 | `docker compose exec nginx nginx -t` | 检查 Nginx 配置文件 | ｜
 

@@ -1,0 +1,83 @@
+services:
+
+  # nginx 服务
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    expose:
+      - "8090"
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /var/log/nginx:/var/log/nginx
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - node
+      - xray
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 128M # 硬上限：绝对不能超过 128MB
+        reservations:
+          memory: 64M # 软下限：系统尽量保证给它 64MB
+
+  # node 服务
+  node-app:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    container_name: node
+    restart: unless-stopped
+    expose:
+      - "3000"
+    volumes:
+      - /var/log/node:/usr/src/app/node/logs
+      - /data/app/database:/usr/src/app/node/database
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 300M # 硬上限：绝对不能超过 300MB
+        reservations:
+          memory: 128M # 软下限：系统尽量保证给它 128MB
+
+  # xray 服务
+  xray:
+    image: teddysun/xray:latest
+    container_name: xray
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    expose:
+      - "8090"
+    networks:
+      - app-network
+    volumes:
+      - ./xray:/etc/xray
+      - /var/log/xray:/var/log/xray
+    deploy:
+      resources:
+        limits:
+          cpus: '1' # 限制最多使用1个CPU核心
+          memory: 256M # 限制最大内存为256MB
+        reservations:
+          memory: 128M # 软下限：系统尽量保证给它 128MB
+    healthcheck:
+      test: [ "CMD", "xray", "run", "-config", "/etc/xray/config.json", "-test" ]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+
+networks:
+  app-network:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: fe80::/10 # IPv6 地址池（视真实情况填写）

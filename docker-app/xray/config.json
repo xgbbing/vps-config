@@ -1,0 +1,68 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log"
+  },
+  "inbounds": [
+    {
+      "listen": "::",
+      "port": 443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "你的UUID",
+            "flow": "xtls-rprx-vision"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "sockopt": {
+          "tcpcongestion": "bbr",
+          "tcpFastOpen": true,
+          "tcpKeepAliveIdle": 60,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveCount": 3
+        },
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "nginx:8090",
+          "xver": 1,
+          "serverNames": [
+            "你的域名",
+            "www.microsoft.com",
+            "cloudflare.com"
+          ],
+          "privateKey": "你的私钥",
+          "shortIds": [
+            "你的shortid"
+          ]
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block",
+      "settings": {}
+    }
+  ]
+}
