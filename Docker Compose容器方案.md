@@ -241,9 +241,9 @@ vi /opt/vps-monitor.sh
 # 容器状态监控脚本
 vi /opt/docker-compose-monitor.sh
 ```
-[vps-monitor.sh 脚本示例]()
+[vps-monitor.sh 脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/vps-monitor.sh)
 
-[docker-compose-monitor.sh 脚本示例]()
+[docker-compose-monitor.sh 脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/docker-compose-monitor.sh)
 
 ```
 # 添加执行权限
