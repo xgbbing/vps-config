@@ -263,7 +263,7 @@ pm2 start all
 | `docker exec -it xray sh` | 进入 xray 容器 | 适合 docker 创建的容器 |
 | `docker compose exec nginx cat /etc/nginx/default.conf` | 不进入容器直接查看 nginx 配置 | |
 | `docker compose exec nginx ps aux` | 查看 nginx 进程 | |
-| ```docker compose exec nginx nginx -t``` | 检查 Nginx 配置文件 |
+| `docker compose exec nginx nginx -t` | 检查 Nginx 配置文件 |
 
 ## 进入容器后如何退出容器
 进入容器后，要退回到宿主机，执行以下任一操作即可：
