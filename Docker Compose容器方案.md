@@ -258,13 +258,16 @@ bash /opt/docker-compose-monitor.sh
 ```
 # 添加定时任务
 crontab -e
+```
 
+```
 # 每两分钟执行一次
 */2 * * * * /bin/bash /opt/docker-compose-monitor.sh >> /var/log/docker-compose-monitor.log 2>&1
 
 # 每两分钟执行一次
 */2 * * * * /bin/bash /opt/vps-monitor.sh >> /var/log/vps-monitor.log 2>&1
 ```
+
 ## 开始迁移（停机操作）
 ```
 # 确认所有配置文件都已经备份好&复制好
