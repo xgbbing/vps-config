@@ -180,19 +180,19 @@ logrotate -f /etc/logrotate.d/nginx
 # 修改 fail2ban 配置
 vi /etc/fail2ban/jail.local
 ```
-[fail2ban/jail.local 示例]()
+[fail2ban/jail.local 示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/jail.local)
 
 ```
 # 添加邮件通知 action
 vi /etc/fail2ban/action.d/send-mail.conf
 ```
-[fail2ban/action.d/send-mail.conf 示例]()
+[fail2ban/action.d/send-mail.conf 示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/action.d/send-mail.conf)
 
 ```
 # 编写邮件通知脚本
 vi /opt/f2b-send-mail.sh
 ```
-[/opt/f2b-send-mail.sh 示例]()
+[/opt/f2b-send-mail.sh 示例](https://github.com/xgbbing/vps-config/blob/main/opt/f2b-send-mail.sh)
 
 ```
 # 查看 fail2ban sshd 状态
@@ -222,7 +222,7 @@ vi ~/.msmtprc
 # 设置权限
 chmod 600 ~/.msmtprc
 ````
-[.msmtprc 示例]()
+[.msmtprc 示例](https://github.com/xgbbing/vps-config/blob/main/.msmtprc)
 
 ```
 # 查看邮件发送日志
