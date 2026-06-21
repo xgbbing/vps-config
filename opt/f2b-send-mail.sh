@@ -7,7 +7,7 @@ MATCHES="${3:-unknown}"
 FAILURES="${4:-unknown}"
 TIME="${5:-unknown}"
 
-TO="xgb.xu@qq.com"
+TO="你的邮箱地址"
 
 NOW=$(date '+%F %T %z')
 

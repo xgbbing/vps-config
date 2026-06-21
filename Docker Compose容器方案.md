@@ -110,11 +110,11 @@ cp -r /opt/node-server/dist /opt/node-server/package*.json /opt/docker-app/node/
 
 ## 编写 node/Dockerfile
 
-[node/Dockerfile 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/node/Dockerfile)
+[node/Dockerfile 配置示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/node/Dockerfile)
 
 ## 编写 node/.dockerignore
 
-[node/.dockerignore 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/node/.dockerignore)
+[node/.dockerignore 配置示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/node/.dockerignore)
 
 ## nginx 迁移
 
@@ -128,7 +128,7 @@ cp -r /etc/nginx/conf.d/default.conf /opt/docker-app/nginx/
 vi /opt/docker-app/nginx/default.conf
 ```
 
-[nginx/default.conf 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/nginx/default.conf)
+[nginx/default.conf 配置示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/nginx/default.conf)
 
 ## 前端 迁移
 
@@ -144,7 +144,7 @@ cp -r /usr/local/etc/xray/config.json /opt/docker-app/xray/
 
 ## 编写 xray 配置
 
-[xray/config.json 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/xray/config.json)
+[xray/config.json 配置示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/xray/config.json)
 
 ## 编写 docker-compose.yml 文件
 
@@ -152,7 +152,7 @@ cp -r /usr/local/etc/xray/config.json /opt/docker-app/xray/
 vi /opt/docker-app/docker-compose.yml
 ```
 
-[docker-compose.yml 示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/docker-compose.yml)
+[docker-compose.yml 配置示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/docker-compose.yml)
 
 ## 修改 nginx 日志轮转服务
 ```
@@ -180,19 +180,19 @@ logrotate -f /etc/logrotate.d/nginx
 # 修改 fail2ban 配置
 vi /etc/fail2ban/jail.local
 ```
-[fail2ban/jail.local 示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/jail.local)
+[fail2ban/jail.local 配置示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/jail.local)
 
 ```
 # 添加邮件通知 action
 vi /etc/fail2ban/action.d/send-mail.conf
 ```
-[fail2ban/action.d/send-mail.conf 示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/action.d/send-mail.conf)
+[fail2ban/action.d/send-mail.conf 配置示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/action.d/send-mail.conf)
 
 ```
 # 编写邮件通知脚本
 vi /opt/f2b-send-mail.sh
 ```
-[/opt/f2b-send-mail.sh 示例](https://github.com/xgbbing/vps-config/blob/main/opt/f2b-send-mail.sh)
+[/opt/f2b-send-mail.sh 脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/f2b-send-mail.sh)
 
 ```
 # 查看 fail2ban sshd 状态
@@ -201,8 +201,11 @@ fail2ban-client status sshd
 # 查看 fail2ban nginx-http-auth 状态
 fail2ban-client status nginx-http-auth
 
+# 添加执行权限
+chmod +x /opt/f2b-send-mail.sh
+
 # 测试发送邮件脚本
-/opt/f2b-send-mail.sh
+bash /opt/f2b-send-mail.sh
 
 ```
 
@@ -222,24 +225,46 @@ vi ~/.msmtprc
 # 设置权限
 chmod 600 ~/.msmtprc
 ````
-[.msmtprc 示例](https://github.com/xgbbing/vps-config/blob/main/.msmtprc)
+[.msmtprc 配置示例](https://github.com/xgbbing/vps-config/blob/main/.msmtprc)
 
 ```
 # 查看邮件发送日志
 tail -10 ~/.msmtp.log
 ```
 
-## Cron 添加容器状态监控 todo
+## Cron 添加容器状态监控 + 系统内存 & 磁盘监控
 
 ```
+# 系统内存 & 磁盘监控脚本
 vi /opt/vps-monitor.sh
+
+# 容器状态监控脚本
+vi /opt/docker-compose-monitor.sh
+```
+[vps-monitor.sh 脚本示例]()
+
+[docker-compose-monitor.sh 脚本示例]()
+
+```
+# 添加执行权限
+chmod +x /opt/vps-monitor.sh
+chmod +x /opt/docker-compose-monitor.sh
+
+# 测试脚本
+bash /opt/vps-monitor.sh
+bash /opt/docker-compose-monitor.sh
 ```
 
 ```
-# 监控容器是否正常运行 如果异常则发送邮件报警 msmtp todo
+# 添加定时任务
+crontab -e
 
+# 每两分钟执行一次
+*/2 * * * * /bin/bash /opt/docker-compose-monitor.sh >> /var/log/docker-compose-monitor.log 2>&1
+
+# 每两分钟执行一次
+*/2 * * * * /bin/bash /opt/vps-monitor.sh >> /var/log/vps-monitor.log 2>&1
 ```
-
 ## 开始迁移（停机操作）
 ```
 # 确认所有配置文件都已经备份好&复制好
