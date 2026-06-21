@@ -13,5 +13,7 @@ VPS部署方案：VPN、VPN速度优化、Docker Compose方案示例、xray、ng
 - [Docker Compose 容器方案](https://github.com/xgbbing/vps-config/blob/main/Docker%20Compose%E5%AE%B9%E5%99%A8%E6%96%B9%E6%A1%88.md)
 - [Linux 系统常用命令](https://github.com/xgbbing/vps-config/blob/main/Linux%E7%B3%BB%E7%BB%9F%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.md)
 - [Docker Compose方案示例](https://github.com/xgbbing/vps-config/tree/main/docker-app)
-
+- [系统内存&磁盘监控脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/vps-monitor.sh)
+- [Docker Compose 状态监控脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/docker-compose-monitor.sh)
+- [fail2ban 邮件通知配置示例](https://github.com/xgbbing/vps-config/tree/main/fail2ban)
 
