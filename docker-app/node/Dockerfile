@@ -13,7 +13,8 @@ RUN apk add --no-cache \
 
 COPY package*.json ./
 
-RUN npm ci --omit=dev
+RUN npm config set registry https://registry.npmmirror.com \
+  && npm ci --omit=dev
 
 COPY . .
 
