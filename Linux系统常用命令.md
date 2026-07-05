@@ -36,3 +36,4 @@ apt install -y <软件包名> 安装软件包
 - 查找命令
 
 ps aux | grep xray 搜索xray进程（含目录）
+

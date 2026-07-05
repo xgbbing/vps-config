@@ -332,7 +332,7 @@ pm2 start all
 | `netstat -tlnp ｜ grep 443` | 应该只看到 xray 在监听 443 | |
 | `docker exec -it xray ping nginx` |  检查容器间通信 应该能通 | |
 | `docker compose exec xray sh` | 进入 xray 容器 | 适合 docker-compose 创建的容器 |
-| `docker exec -it xray sh` | 进入 xray 容器 | 适合 docker 创建的容器 |
+| `docker exec -it nginx sh` | 进入 nginx 容器 | 适合 docker 创建的容器 |
 | `docker compose exec nginx cat /etc/nginx/default.conf` | 不进入容器直接查看 nginx 配置 | |
 | `docker compose exec nginx ps aux` | 查看容器内 nginx 进程 | |
 | `docker compose exec nginx nginx -t` | 检查容器内 nginx 配置文件 |
