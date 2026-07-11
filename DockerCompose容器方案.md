@@ -327,7 +327,7 @@ pm2 start all
 | `docker logs xray` | 查看 xray 的历史日志 | |
 | `docker exec -it xray /bin/bash` | 进入 xray 容器 | |
 | `docker stats nginx --no-stream` | 显示 nginx 容器的实时资源使用情况 | |
-| `docker-compose ps` | 显示所有容器的状态 ||
+| `docker compose ps` | 显示所有容器的状态 ||
 | `docker inspect xray ｜ grep IPAddress` | 显示 xray 容器的 IP 地址 | |
 | `netstat -tlnp ｜ grep 443` | 应该只看到 xray 在监听 443 | |
 | `docker exec -it xray ping nginx` |  检查容器间通信 应该能通 | |

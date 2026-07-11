@@ -37,3 +37,7 @@ apt install -y <软件包名> 安装软件包
 
 ps aux | grep xray 搜索xray进程（含目录）
 
+- 秘钥操作
+ssh-keygen -t rsa -b 4096 -f ./github_cicd_key 生成密钥
+cat github_cicd_key.pub >> authorized_keys 把密钥添加到authorized_keys文件中
+chmod 600 ~/.ssh/authorized_keys 修改密钥权限
