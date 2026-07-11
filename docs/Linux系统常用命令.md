@@ -41,3 +41,9 @@ ps aux | grep xray 搜索xray进程（含目录）
 ssh-keygen -t rsa -b 4096 -f ./github_cicd_key 生成密钥
 cat github_cicd_key.pub >> authorized_keys 把密钥添加到authorized_keys文件中
 chmod 600 ~/.ssh/authorized_keys 修改密钥权限
+
+- 权限
+chmod +x /opt/vps-monitor.sh 添加执行权限
+
+- 执行脚本
+bash gen-webapp-nginx.sh
