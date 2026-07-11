@@ -1,7 +1,7 @@
 name: deploy-docs
 
 env:
-  IMPORT_PATH: src/*.md
+  IMPORT_PATH: /*.md
   DEPLOY_HOST: /opt/docker-app/html/docs
 
 concurrency:
