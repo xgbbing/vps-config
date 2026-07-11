@@ -1,0 +1,41 @@
+name: Deploy Frontend
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # 拉取代码
+      - uses: actions/checkout@v5
+
+      # 配置 SSH
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          chmod 700 ~/.ssh
+          ssh-keyscan -T 10 -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} 2>/dev/null >> ~/.ssh/known_hosts
+
+      # 部署
+      - name: Deploy
+        run: |
+          rsync -azv --delete --itemize-changes \
+            -e "ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.VPS_PORT }} -o StrictHostKeyChecking=yes" \
+            src/*.md \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/docker-app/html/docs/
+
+      # 验证网站  
+      - name: Verify Website
+        run: |
+          curl --fail --show-error --silent --location --output /dev/null https://xgbbing.win
