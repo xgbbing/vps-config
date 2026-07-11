@@ -323,8 +323,8 @@ pm2 start all
 | `docker compose restart` | 重启所有容器（不会应用 yml 文件的改动）。 | 仅当容器卡死、需要重新加载进程时使用（不解决配置问题）。 | 
 | `docker compose down`	| 停止并删除所有容器、网络（默认不删除数据卷）。	| 彻底清理环境，准备全新重建时使用。 | 
 |  `docker compose down --volumes` | 删除所有容器、网络、卷（数据卷）。 | 彻底清理环境，准备全新重建时使用。 | 
-| `docker logs -f xray` | 查看 xray 的实时日志 | |
-| `docker logs xray` | 查看 xray 的历史日志 | |
+| `docker compose logs -f xray` | 查看 xray 的实时日志 | |
+| `docker compose logs nginx` | 查看 nginx 的历史日志 | |
 | `docker exec -it xray /bin/bash` | 进入 xray 容器 | |
 | `docker stats nginx --no-stream` | 显示 nginx 容器的实时资源使用情况 | |
 | `docker compose ps` | 显示所有容器的状态 ||
