@@ -1,7 +1,8 @@
 #!/bin/bash
 
 WEBROOT="/opt/docker-app/html/webapp"
-OUTPUT="/opt/docker-app/nginx/conf.d/webapp.conf"
+OUTPUT="/opt/docker-app/nginx/webapp.d/webapp.conf"
+HTML_PATH="/user/share/nginx/html/webapp"
 
 # 确保输出目录存在
 mkdir -p "$(dirname "$OUTPUT")"
@@ -33,14 +34,14 @@ for dir in "$WEBROOT"/*; do
     cat >> "$OUTPUT" <<EOF
 
 location ^~ /webapp/$app/ {
-    alias "$WEBROOT/$app/";
+    alias "$HTML_PATH/$app/";
     index index.html;
     try_files \$uri \$uri/ "/webapp/$app/index.html";
     add_header Cache-Control "no-cache";
 }
 
 location = /webapp/$app {
-    return 301 /webapp/$app/;
+    return 301 https://\$host\$request_uri/;
 }
 
 EOF
