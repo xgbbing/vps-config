@@ -119,7 +119,7 @@ cp -r /opt/node-server/dist /opt/node-server/package*.json /opt/docker-app/node/
 ## nginx 迁移
 
 ```
-cp -r /etc/nginx/conf.d/default.conf /opt/docker-app/nginx/
+cp -r /etc/nginx/conf.d/ /opt/docker-app/nginx/conf.d/
 ```
 
 ## 编写 nginx/default.conf

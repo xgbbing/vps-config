@@ -1,13 +1,15 @@
-name: Deploy Frontend
+name: deploy-docs
+
+env:
+  IMPORT_PATH: src/*.md
+  DEPLOY_HOST: /opt/docker-app/html/docs
 
 concurrency:
   group: deploy-production
   cancel-in-progress: true
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -22,20 +24,26 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
+
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          chmod 700 ~/.ssh
+
+          cat >> ~/.ssh/config <<EOF
+          Host vps
+            HostName ${{ secrets.VPS_HOST }}
+            User ${{ secrets.VPS_USER }}
+            Port ${{ secrets.VPS_PORT }}
+            IdentityFile ~/.ssh/id_ed25519
+            StrictHostKeyChecking yes
+          EOF
+
           ssh-keyscan -T 10 -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} 2>/dev/null >> ~/.ssh/known_hosts
 
       # 部署
-      - name: Deploy
+      - name: Upload files
         run: |
           rsync -azv --delete --itemize-changes \
-            -e "ssh -i ~/.ssh/id_ed25519 -p ${{ secrets.VPS_PORT }} -o StrictHostKeyChecking=yes" \
-            src/*.md \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/docker-app/html/docs/
-
-      # 验证网站  
-      - name: Verify Website
-        run: |
-          curl --fail --show-error --silent --location --output /dev/null https://xgbbing.win
+            -e ssh \
+            ${{ env.IMPORT_PATH }} \
+            vps:${{ env.DEPLOY_HOST }}/
+       
