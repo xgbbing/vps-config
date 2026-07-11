@@ -19,7 +19,3 @@ VPS部署方案：VPN、VPN速度优化、Docker Compose方案示例、xray、ng
 - 定时任务配置示例
 - [服务器迁移脚本示例-导出](https://github.com/xgbbing/vps-config/blob/main/opt/vps-export.sh)
 - [服务器迁移脚本示例-恢复](https://github.com/xgbbing/vps-config/blob/main/opt/vps-restore.sh)
-
-## github Actions
-
-![deploy-docs](https://github.com/xgbbing/vps-config/actions/workflows/deploy-docs.yml/badge.svg)
