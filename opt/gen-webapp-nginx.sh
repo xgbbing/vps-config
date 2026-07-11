@@ -2,7 +2,7 @@
 
 WEBROOT="/opt/docker-app/html/webapp"
 OUTPUT="/opt/docker-app/nginx/webapp.d/webapp.conf"
-HTML_PATH="/user/share/nginx/html/webapp"
+HTML_PATH="/usr/share/nginx/html/webapp"
 
 # 确保输出目录存在
 mkdir -p "$(dirname "$OUTPUT")"
