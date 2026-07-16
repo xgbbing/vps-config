@@ -47,3 +47,12 @@ chmod +x /opt/vps-monitor.sh 添加执行权限
 
 - 执行脚本
 bash gen-webapp-nginx.sh
+
+- 测试
+brew install speedtest-cli 安装测试TCP工具
+speedtest 测试TCP速度
+
+brew install mtr 安装网络追踪工具
+mtr --no-dns IP地址 追踪网络路径并统计每一跳的数据
+
+time curl -I https://github.com 测速
