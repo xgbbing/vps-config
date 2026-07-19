@@ -1,12 +1,14 @@
 # SSH 密钥登录
 
 - 在本地电脑生成密钥对
-如果你已经有密钥对（检查 ~/.ssh/id_rsa 和 ~/.ssh/id_rsa.pub 是否存在），可以跳过这一步。
+  如果你已经有密钥对（检查 ~/.ssh/id_rsa 和 ~/.ssh/id_rsa.pub 是否存在），可以跳过这一步。
 
 在本地终端执行：
+
 ```
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ```
+
 -t rsa：指定加密算法
 
 -b 4096：密钥长度（更安全）
@@ -28,19 +30,24 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 - 将公钥上传到服务器
 
 方法一：使用 ssh-copy-id（最简便，推荐）
+
 ```
 ssh-copy-id -p 2222 你的用户名@你的服务器ip
 ```
+
 系统会提示输入密码，输入后公钥会自动追加到服务器的 ~/.ssh/authorized_keys 文件中。
 
 方法二：手动复制
 在本地查看公钥内容：
+
 ```
 cat ~/.ssh/id_rsa.pub
 ```
+
 复制输出的全部内容（以 ssh-rsa 开头）
 
 登录服务器（用密码），执行：
+
 ```
 mkdir -p ~/.ssh
 
@@ -53,10 +60,12 @@ chmod 600 ~/.ssh/authorized_keys
 ```
 
 - 测试密钥登录是否生效
-在禁用密码登录之前，务必先测试密钥登录能否正常使用！
+  在禁用密码登录之前，务必先测试密钥登录能否正常使用！
+
 ```
 ssh -p 2222 username@你的服务器ip
 ```
+
 如果设置了私钥密码短语，会提示输入
 
 如果直接登录成功了，说明密钥配置正确 ✅
@@ -70,13 +79,14 @@ ssh -p 2222 username@你的服务器ip
 authorized_keys 文件权限是否为 600
 
 - 禁用密码登录（关键步骤）
-确认密钥登录成功后，再修改服务器配置。
+  确认密钥登录成功后，再修改服务器配置。
 
 登录服务器，编辑 SSH 配置文件：
 
 ```
 vi /etc/ssh/sshd_config
 ```
+
 找到并修改以下配置项：
 
 ```
@@ -92,28 +102,32 @@ ChallengeResponseAuthentication no
 # 启用公钥认证（确保是 yes）
 PubkeyAuthentication yes
 ```
+
 - 重启 SSH 服务
 
 ```
 sudo systemctl restart sshd
 ```
+
 ⚠️ 重要提示：重启后，不要立刻关闭当前 SSH 会话！保持一个已连接的窗口开着，新开一个窗口测试密钥登录。如果新窗口登录失败，你还可以用旧窗口把配置改回来，避免把自己锁在门外。
 
 - 最终验证
-新开一个终端窗口，测试连接：
+  新开一个终端窗口，测试连接：
 
 ```
 ssh -p 2222 username@你的服务器ip
 ```
+
 如果能正常登录，说明配置成功。此时再尝试密码登录应该会被拒绝：
 
 ```
 ssh -p 2222 -o PreferredAuthentications=password root@你的服务器ip
 ```
+
 会收到 Permission denied (publickey) 的提示 ✅
 
 - 补充：配置本地 SSH 快捷登录（可选）
-在本地 ~/.ssh/config 文件中添加：
+  在本地 ~/.ssh/config 文件中添加：
 
 ```
 Host myserver
@@ -122,17 +136,20 @@ Host myserver
     User username
     IdentityFile ~/.ssh/id_rsa
 ```
+
 之后只需要执行 ssh myserver 即可登录，更加方便。
 
-- 安全提醒
-｜事项	 ｜  说明 ｜
-私钥保管	私钥 id_rsa 绝不能上传到任何地方，也不要截图分享
-备份私钥	建议将私钥备份到安全的加密存储（如 1Password、Bitwarden）
-服务器备份	建议备份 /etc/ssh/sshd_config 文件，方便回滚
-保留应急通道	配置完成后，建议保留一个 VNC/控制台登录方式，以防万一
+## 安全提醒
 
+| 事项         | 说明                                                      |
+| ------------ | --------------------------------------------------------- |
+| 私钥保管     | 私钥 id_rsa 绝不能上传到任何地方，也不要截图分享          |
+| 备份私钥     | 建议将私钥备份到安全的加密存储（如 1Password、Bitwarden） |
+| 服务器备份   | 建议备份 /etc/ssh/sshd_config 文件，方便回滚              |
+| 保留应急通道 | 配置完成后，建议保留一个 VNC/控制台登录方式，以防万一     |
 
 ## 缓存密钥指纹（仅当前会话缓存）
+
 ```
 # 启动 ssh-agent
 eval $(ssh-agent)
@@ -152,6 +169,7 @@ ssh-add -D
 ```
 
 ## 终端会话共享 ssh-agent
+
 ```
 # 安装 keychain
 brew install keychain

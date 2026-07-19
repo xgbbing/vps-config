@@ -1,14 +1,17 @@
 # Docker compose 容器迁移方案
 
 ## 迁移前备份
+
 ## nginx 配置
+
 ```
 vi /etc/nginx/nginx.conf
 vi /etc/nginx/conf.d/default.conf
 vi /etc/nginx/sites-enabled/default
 ```
- 
+
 ## 端口占用
+
 ```
 ss -tlnp
 ```
@@ -18,28 +21,34 @@ ss -tlnp
 /var/www/html
 
 ## node 信息
+
 node 服务目录 /opt/node-server
 node 启动命令 'node app.js'
-node 用的端口  3000
+node 用的端口 3000
 node 环境变量 PORT=3000 NODE_ENV=production
 
 ## 数据库文件
+
 /data/myapp/database
 
 ## xray 配置
+
 xray 配置文件 /usr/local/etc/xray/config.json
 
 ## cron 配置
+
 ```
 vi /opt/monitor.sh
 ```
 
 ## 日志论证 logrotate 配置
+
 ```
 vi /etc/logrotate.d/nginx
 ```
 
 ## fail2ban 配置
+
 ```
 vi /etc/fail2ban/jail.local
 ```
@@ -47,13 +56,15 @@ vi /etc/fail2ban/jail.local
 ## msmtp 配置
 
 ## 证书目录
+
 /etc/letsencrypt
 
 ## Certbot 配置
 
 ## 迁移准备
-          
+
 ## 安装 Docker 和 Docker Compose
+
 ```
 # 安装 Docker
 curl -fsSL https://get.docker.com | sh
@@ -74,6 +85,7 @@ systemctl enable docker
 ```
 
 ## 创建 docker 项目结构
+
 ```
 mkdir -p /opt/docker-app
 cd /opt/docker-app
@@ -104,6 +116,7 @@ cd /opt/docker-app
 ```
 
 ## node 迁移
+
 ```
 cp -r /opt/node-server/dist /opt/node-server/package*.json /opt/docker-app/node/
 ```
@@ -155,6 +168,7 @@ vi /opt/docker-app/docker-compose.yml
 [docker-compose.yml 配置示例](https://github.com/xgbbing/vps-config/blob/main/docker-app/docker-compose.yml)
 
 ## 修改 nginx 日志轮转服务
+
 ```
 vi /etc/logrotate.d/nginx
 ```
@@ -180,18 +194,21 @@ logrotate -f /etc/logrotate.d/nginx
 # 修改 fail2ban 配置
 vi /etc/fail2ban/jail.local
 ```
+
 [fail2ban/jail.local 配置示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/jail.local)
 
 ```
 # 添加邮件通知 action
 vi /etc/fail2ban/action.d/send-mail.conf
 ```
+
 [fail2ban/action.d/send-mail.conf 配置示例](https://github.com/xgbbing/vps-config/blob/main/fail2ban/action.d/send-mail.conf)
 
 ```
 # 编写邮件通知脚本
 vi /opt/f2b-send-mail.sh
 ```
+
 [/opt/f2b-send-mail.sh 脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/f2b-send-mail.sh)
 
 ```
@@ -216,7 +233,7 @@ systemctl restart fail2ban
 
 ## 发送邮件配置
 
-````
+```
 # 安装 msmtp 发邮件服务
 apt install msmtp -y
 
@@ -224,7 +241,8 @@ vi ~/.msmtprc
 
 # 设置权限
 chmod 600 ~/.msmtprc
-````
+```
+
 [.msmtprc 配置示例](https://github.com/xgbbing/vps-config/blob/main/.msmtprc)
 
 ```
@@ -241,6 +259,7 @@ vi /opt/vps-monitor.sh
 # 容器状态监控脚本
 vi /opt/docker-compose-monitor.sh
 ```
+
 [vps-monitor.sh 脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/vps-monitor.sh)
 
 [docker-compose-monitor.sh 脚本示例](https://github.com/xgbbing/vps-config/blob/main/opt/docker-compose-monitor.sh)
@@ -269,6 +288,7 @@ crontab -e
 ```
 
 ## 开始迁移（停机操作）
+
 ```
 # 确认所有配置文件都已经备份好&复制好
 ls /opt/docker-app
@@ -301,6 +321,7 @@ curl http://www.xgbbing.com
 ```
 
 ## docker 迁移回滚
+
 ```
 # 停掉 docker 容器
 docker compose down
@@ -314,30 +335,32 @@ pm2 start all
 ```
 
 ## docker 容器常用命令
-| 命令	| 说明	 | 适用你的场景 | 
-| ----| ----| ----|
-| `docker compose build <容器名>` | 构建镜像（会拉取镜像）。 | 创建镜像时，会拉取镜像。 |
-| `docker compose up -d`	| 后台启动所有服务。如果镜像不存在会先拉取。|修改 docker-compose.yml 后，必须用此命令重建容器以应用新配置。 | 
-| `docker compose stop`	| 停止所有容器（不会删除容器）。 | 临时暂停服务。 | 
-| `docker compose start`	| 启动已被停止的容器。	| 恢复暂停的服务。 | 
-| `docker compose restart` | 重启所有容器（不会应用 yml 文件的改动）。 | 仅当容器卡死、需要重新加载进程时使用（不解决配置问题）。 | 
-| `docker compose down`	| 停止并删除所有容器、网络（默认不删除数据卷）。	| 彻底清理环境，准备全新重建时使用。 | 
-|  `docker compose down --volumes` | 删除所有容器、网络、卷（数据卷）。 | 彻底清理环境，准备全新重建时使用。 | 
-| `docker compose logs -f xray` | 查看 xray 的实时日志 | |
-| `docker compose logs nginx` | 查看 nginx 的历史日志 | |
-| `docker exec -it xray /bin/bash` | 进入 xray 容器 | |
-| `docker stats nginx --no-stream` | 显示 nginx 容器的实时资源使用情况 | |
-| `docker compose ps` | 显示所有容器的状态 ||
-| `docker inspect xray ｜ grep IPAddress` | 显示 xray 容器的 IP 地址 | |
-| `netstat -tlnp ｜ grep 443` | 应该只看到 xray 在监听 443 | |
-| `docker exec -it xray ping nginx` |  检查容器间通信 应该能通 | |
-| `docker compose exec xray sh` | 进入 xray 容器 | 适合 docker-compose 创建的容器 |
-| `docker exec -it nginx sh` | 进入 nginx 容器 | 适合 docker 创建的容器 |
-| `docker compose exec nginx cat /etc/nginx/default.conf` | 不进入容器直接查看 nginx 配置 | |
-| `docker compose exec nginx ps aux` | 查看容器内 nginx 进程 | |
-| `docker compose exec nginx nginx -t` | 检查容器内 nginx 配置文件 |
+
+| 命令                                         | 说明                                           |
+| -------------------------------------------- | ---------------------------------------------- |
+| `docker compose build <容器名>`              | 构建镜像（会拉取镜像）创建镜像时，会拉取镜像。 |
+| `docker compose up -d`                       | 后台启动，修改 docker-compose.yml需用此        |
+| `docker compose stop`                        | 停止所有容器（不删除容器）。 临时暂停.         |
+| `docker compose start`                       | 启动已被停止的容器。 恢复暂停的服务。          |
+| `docker compose restart`                     | 重启（不解决配置问题）。                       |
+| `docker compose down`                        | 停止并删除所有容器、网络（不删除数据卷）       |
+| `docker compose down --volumes`              | 删除所有容器、网络、卷（数据卷）               |
+| `docker compose logs -f xray`                | 查看 xray 的实时日志                           |
+| `docker compose logs nginx`                  | 查看 nginx 的历史日志                          |
+| `docker exec -it xray /bin/bash`             | 进入 xray 容器.                                |
+| `docker stats nginx --no-stream`             | 显示 nginx 容器的实时资源使用情况              |
+| `docker compose ps`                          | 显示所有容器的状态                             |
+| `docker inspect xray ｜ grep IPAddress`      | 显示 xray 容器的 IP 地址                       |
+| `netstat -tlnp ｜ grep 443`                  | 应该只看到 xray 在监听 443                     |
+| `docker exec -it xray ping nginx`            | 检查容器间通信 应该能通                        |
+| `docker compose exec xray sh`                | 进入 xray 容器，适合 docker-compose 创建的容器 |
+| `docker exec -it nginx sh`                   | 进入 nginx 容器，适合 docker 创建的容器        |
+| `docker compose exec nginx cat default.conf` | 不进入容器直接查看 nginx 配置                  |
+| `docker compose exec nginx ps aux`           | 查看容器内 nginx 进程                          |
+| `docker compose exec nginx nginx -t`         | 检查容器内 nginx 配置文件                      |
 
 ## 进入容器后如何退出容器
+
 进入容器后，要退回到宿主机，执行以下任一操作即可：
 
 - 输入 `exit` 然后按回车（最标准的方式）

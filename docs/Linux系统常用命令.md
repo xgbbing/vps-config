@@ -1,58 +1,75 @@
 # Linux 系统常用命令
 
-- 文件操作
+# 文件操作
 
-| 命令 | 说明 |
-cat 查看文件内容
-rm 删除文件
-mv 重命名或移动文件或目录
-cp 复制文件
-chmod 修改文件权限
-chown 修改文件所有者
+| 命令    | 说明                   |
+| ------- | ---------------------- |
+| `cat`   | 查看文件内容           |
+| `rm`    | 删除文件               |
+| `mv`    | 重命名或移动文件或目录 |
+| `cp`    | 复制文件               |
+| `chmod` | 修改文件权限           |
+| `chown` | 修改文件所有者         |
 
-- 文件目录操作
-| 命令 | 说明 |
-mkdir 创建目录
-rmdir 删除空目录
+# 文件目录操作
 
-- 查看命令
-｜ 命令 | 说明 |
-ls 查看当前目录下的文件和文件夹
-ls -l 显示文件和文件夹的详细信息
-free 查看内存使用情况
-df 查看磁盘使用情况
-top 显示正在运行的进程
-ps 显示正在运行的进程
-uname -a 显示系统信息
-lsb_release -a 查看系统版本
-hostnamectl 查看当前主机名及完整系统状态
-cat /proc/cpuinfo 显示CPU信息
-cat /proc/meminfo 显示内存信息
-cat /proc/version 显示内核版本
-apt update 更新软件包列表
-apt upgrade -y 升级软件包
-apt install -y <软件包名> 安装软件包
+| 命令    | 说明       |
+| ------- | ---------- |
+| `mkdir` | 创建目录   |
+| `rmdir` | 删除空目录 |
 
-- 查找命令
+# 查看命令
 
-ps aux | grep xray 搜索xray进程（含目录）
+| 命令                        | 说明                         |
+| --------------------------- | ---------------------------- |
+| `ls`                        | 查看当前目录下的文件和文件夹 |
+| `ls -l `                    | 显示文件和文件夹的详细信息   |
+| `free`                      | 查看内存使用情况             |
+| `df`                        | 查看磁盘使用情况             |
+| `top`                       | 显示正在运行的进程           |
+| `ps`                        | 显示正在运行的进程           |
+| `uname -a `                 | 显示系统信息                 |
+| `lsb_release -a`            | 查看系统版本                 |
+| `hostnamectl`               | 查看当前主机名及完整系统状态 |
+| `cat /proc/cpuinfo`         | 显示CPU信息                  |
+| `cat /proc/meminfo`         | 显示内存信息                 |
+| `cat /proc/version`         | 显示内核版本                 |
+| `apt update `               | 更新软件包列表               |
+| `apt upgrade -y`            | 升级软件包                   |
+| `apt install -y <软件包名>` | 安装软件包                   |
 
-- 秘钥操作
-ssh-keygen -t rsa -b 4096 -f ./github_cicd_key 生成密钥
-cat github_cicd_key.pub >> authorized_keys 把密钥添加到authorized_keys文件中
-chmod 600 ~/.ssh/authorized_keys 修改密钥权限
+# 查找命令
 
-- 权限
-chmod +x /opt/vps-monitor.sh 添加执行权限
+| 命令                  | 说明                   |
+| --------------------- | ---------------------- |
+| `ps aux ｜ grep xray` | 搜索xray进程（含目录） |
 
-- 执行脚本
-bash gen-webapp-nginx.sh
+# 秘钥操作
 
-- 测试
-brew install speedtest-cli 安装测试TCP工具
-speedtest 测试TCP速度
+| 命令                                             | 说明                              |
+| ------------------------------------------------ | --------------------------------- |
+| `ssh-keygen -t rsa -b 4096 -f ./github_cicd_key` | 生成密钥                          |
+| `cat github_cicd_key.pub >> authorized_keys`     | 把密钥添加到authorized_keys文件中 |
+| `chmod 600 ~/.ssh/authorized_keys`               | 修改密钥权限                      |
 
-brew install mtr 安装网络追踪工具
-mtr --no-dns IP地址 追踪网络路径并统计每一跳的数据
+# 权限
 
-time curl -I https://github.com 测速
+| 命令                           | 说明         |
+| ------------------------------ | ------------ |
+| `chmod +x /opt/vps-monitor.sh` | 添加执行权限 |
+
+# 执行脚本
+
+| 命令                       | 说明                     |
+| -------------------------- | ------------------------ |
+| `bash gen-webapp-nginx.sh` | 执行webapp nginx脚本文件 |
+
+# 测试
+
+| 命令                              | 说明                           |
+| --------------------------------- | ------------------------------ |
+| `brew install speedtest-cli`      | 安装测试TCP工具                |
+| `speedtest`                       | 测试TCP速度                    |
+| `brew install mtr`                | 安装网络追踪工具               |
+| `mtr --no-dns <IP地址>`           | 追踪网络路径并统计每一跳的数据 |
+| `time curl -I https://github.com` | 测速                           |
